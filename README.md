@@ -63,6 +63,10 @@ candump can0
 # 8. Send a test CAN frame (Run this in Terminal B)
 cansend can0 123#DEADBEEF
 
+
+```
+
+
 ----> the instruments for terminal: 
         Use cansend and candump to transmit and receive live CAN frames between the Zybo board and your host PC.
    <img width="786" height="533" alt="Screenshot from 2026-07-17 16-14-47" src="https://github.com/user-attachments/assets/25042318-d67a-47b4-8eda-087dfa7c232b" />
