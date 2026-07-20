@@ -29,6 +29,41 @@ Configured embedded Linux networking and SocketCAN protocol stacks (can-utils, i
 
         Bring up the CAN interface in Linux (ip link set can0 up ...).
 
+
+## 💻 Usage & Testing Commands
+
+Here are the step-by-step commands to bring up and test your CAN communication interface for both **Serial Mode (slcand)** and **SocketCAN Mode (gs_usb)**.
+
+---
+
+### 1. Serial Mode for USB-to-CAN (SH-C31A)
+
+```bash
+# 1. Connect the USB-to-CAN adapter (SH-C31A) to the PC. 
+#    (Ensure its internal switch/mode is set to work mode OFF if required)
+
+# 2. Check the kernel logs to find the assigned device name (e.g., ttyACM0 or ttyACM1)
+sudo dmesg | tail -n 20
+
+# 3. Attach the serial CAN device using slcand (set speed index -s6 for 500k baudrate)
+sudo slcand -o -s6 -S 500000 /dev/ttyACM1 can0
+
+# 4. Check if the can0 interface has been successfully created
+ip link show can0
+
+# 5. Bring up the interface
+sudo ip link set can0 up
+
+# 6. Verify that the initialization and settings are correct
+ip -details link show can0
+
+# 7. Start listening for incoming CAN frames (Run this in Terminal A)
+candump can0
+
+# 8. Send a test CAN frame (Run this in Terminal B)
+cansend can0 123#DEADBEEF
+
+----> the instruments for terminal: 
         Use cansend and candump to transmit and receive live CAN frames between the Zybo board and your host PC.
    <img width="786" height="533" alt="Screenshot from 2026-07-17 16-14-47" src="https://github.com/user-attachments/assets/25042318-d67a-47b4-8eda-087dfa7c232b" />
 
